@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: docker.io/nginxinc/nginx-unprivileged:1.20-alpine
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128M
+        ports:
+        - containerPort: 8443
+          name: https
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/conf.d
+        - name: tls
+          mountPath: /etc/ssl/www
+        - name: content
+          mountPath: /usr/share/nginx/html/index.html
+          subPath: index.html
+      volumes:
+      - name: content
+        configMap:
+          name: webapp-content
+      - name: nginx-conf
+        configMap:
+          name: webapp-nginx-conf
+      - name: tls
+        secret:
+          secretName: webapp-tls

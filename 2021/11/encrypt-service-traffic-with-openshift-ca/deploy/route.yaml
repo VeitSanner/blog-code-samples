@@ -1,0 +1,16 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+spec:
+  to:
+    kind: Service
+    name: webapp
+    weight: 100
+  port:
+    targetPort: https
+  tls:
+    termination: reencrypt
+  wildcardPolicy: None

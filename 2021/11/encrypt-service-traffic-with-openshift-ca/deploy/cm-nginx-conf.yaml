@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-nginx-conf
+data:
+  default.conf: |-
+    server {
+        listen       8443 ssl;
+        listen  [::]:8443 ssl;
+        server_name  localhost;
+        ssl_certificate     /etc/ssl/www/tls.crt;
+        ssl_certificate_key /etc/ssl/www/tls.key;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-content
+data:
+  index.html: |-
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <title>Awesome Web App</title>
+      </head>
+      <body>
+        <h1>Awesome!!!</h1>
+        <img alt="Awesome!!!" src="https://media.giphy.com/media/mXnO9IiWWarkI/giphy.gif" />
+      </body>
+    </html>
